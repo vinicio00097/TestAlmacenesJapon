@@ -1,0 +1,28 @@
+
+<div class="match-container2" align="center">
+    <div *ngIf="isVerified" class="internal-container">
+      <mat-card  [class.mat-elevation-z8]="true">
+        <mat-card-header>
+          <mat-card-title><p class="mat-h1">Recuperación</p></mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div style="display: flex;flex-direction: column;">
+            <mat-form-field color="accent">
+              <input matInput placeholder="Ingrese contraseña" [(ngModel)]="Contrasenia1" [type]="hide ? 'password' : 'text'">
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </mat-form-field>
+            <mat-form-field color="accent">
+              <input matInput placeholder="Confirme contraseña" [(ngModel)]="Contrasenia2" [type]="hide ? 'password' : 'text'">
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button [disabled]="isLoading" mat-raised-button color="accent" style="width: 100%;height: 50px;" (click)="restaurar()">Restaurar</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div align="center" class="internal-container">
+        <mat-spinner color="accent"></mat-spinner>
+    </div>
+  </div>

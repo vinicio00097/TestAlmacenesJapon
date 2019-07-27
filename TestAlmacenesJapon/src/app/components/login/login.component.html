@@ -1,0 +1,31 @@
+<div class="match-container2" align="center">
+  <div class="internal-container">
+    <mat-card [class.mat-elevation-z8]="true">
+      <mat-card-header>
+        <mat-card-title><p class="mat-h1">Login</p></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div style="display: flex;flex-direction: column;">
+          <mat-form-field color="accent">
+            <input matInput placeholder="Usuario" [(ngModel)]="Usuario">
+          </mat-form-field>
+          <mat-form-field color="accent">
+            <input matInput placeholder="Contraseña" [(ngModel)]="Contrasenia" [type]="hide ? 'password' : 'text'">
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </mat-form-field>
+          <mat-grid-list cols="2" rowHeight="2:1">
+            <mat-grid-tile>
+              <mat-checkbox [(ngModel)]="Recordar">Recordarme</mat-checkbox>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <button mat-button (click)="onRecovery()">Recuperar contraseña</button>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button [disabled]="isLoading" mat-raised-button color="accent" style="width: 100%;height: 50px;" (click)="login()">Iniciar sesión</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

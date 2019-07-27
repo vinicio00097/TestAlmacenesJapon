@@ -1,0 +1,12 @@
+<div [ngStyle]="{'padding-top':mobileQuery.matches?'56px':'64px','padding-left':'10px','padding-right':'10px'}" align="center" class="container4">
+  <mat-form-field color="accent" style="display: block">
+      <input matInput type="text" placeholder="Palíndromo" [(ngModel)]="Palindromo">
+    </mat-form-field>
+    <button mat-raised-button (click)="calcular()">Analizar</button>
+    
+  <div align="center">
+    <h5 mat-dialog-title>Palindromos</h5>
+    <button *ngFor="let word of palindromes">{{word}} </button>
+  </div>
+  
+</div>

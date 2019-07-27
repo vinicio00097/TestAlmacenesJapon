@@ -1,0 +1,77 @@
+<div *ngIf="action!='delete'" align="center">
+  <h1 mat-dialog-title>{{title}}</h1>
+  <div>
+    <mat-form-field color="accent" style="display: block">
+      <input matInput [readonly]="action=='see'" placeholder="Nombre" [(ngModel)]="Nombre">
+    </mat-form-field>
+    <mat-form-field color="accent" style="display: block">
+      <input matInput [readonly]="action=='see'" type="number" placeholder="DPI" [(ngModel)]="DPI">
+    </mat-form-field>
+    <mat-form-field color="accent" style="display: block">
+      <mat-select [disabled]="action=='see'" placeholder="# de hijos" [(ngModel)]="Cantidad_Hijos" (selectionChange)="getNumHijos($event)">
+        <mat-option *ngFor="let count of amount" [value]="count">
+          {{count}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field color="accent" style="display: block">
+      <input matInput [readonly]="action=='see'" type="number" placeholder="Salario base" [(ngModel)]="Salario_Base">
+    </mat-form-field>
+    <mat-form-field color="accent" style="display: block">
+      <input matInput [readonly]="action=='see'" type="number" placeholder="Bono decreto" [(ngModel)]="Bono_Decreto">
+    </mat-form-field>
+    <mat-form-field color="accent" style="display: block">
+      <input readonly matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" [(ngModel)]="Fecha_Nacimiento">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field color="accent" style="display: block">
+      <input matInput [readonly]="action=='see'" type="email" placeholder="Correo electrónico" [(ngModel)]="Email">
+    </mat-form-field>
+    <div *ngIf="action=='see'">
+        <h5 class="mat-body-1">
+            Iggs: {{Iggs}}
+          </h5>
+          <h5 class="mat-body-1">
+              Irtra: {{Irtra}}
+            </h5>
+            <h5 class="mat-body-1">
+                Bono de paternidad: {{Bono_Paternidad}}
+              </h5>
+              <h5 class="mat-body-1">
+                  Salario total: {{Salario_Total}}
+                </h5>
+                <h5 class="mat-body-1">
+                    Salario liquido: {{Salario_Liquido}}
+                  </h5>
+    </div>
+    <div *ngIf="action!='see'">
+      <mat-form-field style="display: block">
+        <input matInput [readonly]="true" placeholder="Usuario" [(ngModel)]="Usuario">
+      </mat-form-field>
+      <mat-form-field style="display: block">
+        <input matInput [readonly]="true" placeholder="Contraseña" [(ngModel)]="Contrasenia">
+      </mat-form-field>
+      <button (click)="getRandomCredentials()" mat-stroked-button>Generar credenciales</button>
+    </div> 
+  </div>
+  <div *ngIf="action!='see'" mat-dialog-actions align="center">
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button (click)="save()" cdkFocusInitial [disabled]="Nombre==null||DPI==null||
+    Cantidad_Hijos==null||Salario_Base==null||Fecha_Nacimiento==null||Bono_Decreto==null
+    ||Email==null||Usuario==null">Guardar</button>
+  </div>
+  <div *ngIf="action=='see'" mat-dialog-actions align="center">
+    <button mat-button (click)="onNoClick()">Aceptar</button>
+  </div>
+</div>
+<div *ngIf="action=='delete'" align="center">
+  <h1 mat-dialog-title>{{title}}</h1>
+  <div>
+    <h5 class="mat-body-1">Desea borrar el empleado "{{Nombre}}" ?</h5>
+  </div>
+  <div mat-dialog-actions align="center">
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button (click)="delete()" cdkFocusInitial>Borrar</button>
+  </div>
+</div>
