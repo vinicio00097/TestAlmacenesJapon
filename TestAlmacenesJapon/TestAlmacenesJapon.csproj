@@ -256,6 +256,14 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Design\Captur5.PNG" />
+    <Content Include="Design\Capture1.PNG" />
+    <Content Include="Design\Capture2.PNG" />
+    <Content Include="Design\Capture3.PNG" />
+    <Content Include="Design\Capture4.PNG" />
+    <Content Include="Design\Capture7.PNG" />
+    <Content Include="Design\Capture8.PNG" />
+    <Content Include="Design\ER.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -290,6 +298,7 @@
     <Content Include="DBEntityFW\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Design\pruebatecnicaDB" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
