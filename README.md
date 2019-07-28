@@ -5,3 +5,5 @@ El envio de correo para recuperación de contraseña probablemente no funcionar�
 Aqui va incluida la DB en su respectivo BAK aunque la aplicacion funciona con una DB remota, esta va incluida para poder verla, también en design van incluidas unas screenshots y el ER.
 
 Hay una preview de la interfaz gráfica en el siguiente enlace, aunque esta no tiene funcionalidad ya que no hay ningún servidor remoto.
+
+http://vinicio00097-001-site1.dtempurl.com
