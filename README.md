@@ -1,4 +1,9 @@
 # TestAlmacenesJapon
+La aplicación esta elaborada con:
+* Angular 6 (cliente)
+* .NET Framework (servidor)
+* MSSQL (DB)
+
 
 El envio de correo para recuperación de contraseña probablemente no funcionará en la pc que se ejecute porque este envia la url que estaba predefinida en la maquina que se desarrolló, todo fue trabajado en local.
 
