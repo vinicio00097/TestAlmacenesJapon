@@ -38,6 +38,8 @@ export class RecoveryComponent implements OnInit {
           Contrasenia1:this.Contrasenia1
         };
     
+        this.isLoading=true;
+        
         this.http.post(this.webService.URLRecoveryChange,changeParams,{
           headers: new HttpHeaders().set('Content-Type','application/json')
         }).subscribe((response)=>{
