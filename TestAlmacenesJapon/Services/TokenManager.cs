@@ -79,6 +79,43 @@ namespace TestAlmacenesJapon.Models
             //username = usernameClaim.Value;
             return true;
         }
+
+        public static String getUsername(string token)
+        {
+            string username = null;
+            ClaimsPrincipal principal = GetPrincipal(token);
+            if (principal == null)
+                return null;
+            ClaimsIdentity identity = null;
+            try
+            {
+                identity = (ClaimsIdentity)principal.Identity;
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+            Claim usernameClaim = identity.FindFirst(ClaimTypes.Name);
+            username = usernameClaim.Value;
+            return username;
+        }
+
+        public static ClaimsIdentity getClaims(string token)
+        {
+            ClaimsPrincipal principal = GetPrincipal(token);
+            if (principal == null)
+                return null;
+            ClaimsIdentity identity = null;
+            try
+            {
+                identity = (ClaimsIdentity)principal.Identity;
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+            return identity;
+        }
     }
 
 }

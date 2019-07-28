@@ -13,10 +13,10 @@ namespace TestAlmacenesJapon.DBEntityFW
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TestAlmacenesJaponEntities : DbContext
+    public partial class DB_A4BC7A_test1Entities : DbContext
     {
-        public TestAlmacenesJaponEntities()
-            : base("name=TestAlmacenesJaponEntities")
+        public DB_A4BC7A_test1Entities()
+            : base("name=DB_A4BC7A_test1Entities")
         {
         }
     

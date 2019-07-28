@@ -15,7 +15,7 @@ export class PalindromosComponent implements OnInit {
   private _mobileQueryListener: () => void;
   public isLoaded=false;
   Palindromo:String;
-  palidromes=["hola","hola2"];
+  palindromes=[];
 
   constructor(private http:HttpClient,public dialog:MatDialog,
     public snackbar:MatSnackBar,changeDetectorRef: ChangeDetectorRef,
@@ -30,24 +30,25 @@ export class PalindromosComponent implements OnInit {
   }
 
   calcular(){
-    this.palidromes=[];
+    this.palindromes=[];
     
     if(this.Palindromo.length>0){
-      let words=this.Palindromo.split(RegExp("[\\s]"));
+      let words=this.Palindromo.split(new RegExp("[\\s]+"));
 
       for(let count=0;count<words.length;count++){
         let array=[];
+        let newArray=[];
   
         for(let count2=0;count2<words[count].length;count2++){
           array.push(words[count][count2]);
         }
-  
+
         if(array.reverse().join("")==words[count]){
-          this.palidromes.push(words[count]);
+          this.palindromes.push(words[count]);
         }
       }
 
-      console.log(this.palidromes);
+      console.log(this.palindromes);
     }
   }
 

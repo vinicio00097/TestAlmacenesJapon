@@ -15,7 +15,7 @@ namespace TestAlmacenesJapon.Controllers
 
     public class EmpleadosController : ApiController
     {
-        private TestAlmacenesJaponEntities dbAlmacen = new TestAlmacenesJaponEntities();
+        private DB_A4BC7A_test1Entities dbAlmacen = new DB_A4BC7A_test1Entities();
 
         // GET: api/Empleados
         public HttpResponseMessage Get()
@@ -75,95 +75,144 @@ namespace TestAlmacenesJapon.Controllers
         // POST: api/Empleados
         public HttpResponseMessage Post([FromBody]Empleados value)
         {
-            if (value.Usuario != null && value.Contrasenia != null)
+            if (this.Request.Headers.Authorization != null)
             {
-                HashSalt hashSalt = Hasher.GenerateSaltedHash(32, value.Contrasenia);
+                if (TokenManager.ValidateToken(this.Request.Headers.Authorization.Parameter))
+                {
+                    if (value.Usuario != null && value.Contrasenia != null)
+                    {
+                        HashSalt hashSalt = Hasher.GenerateSaltedHash(32, value.Contrasenia);
 
-                value.Contrasenia = hashSalt.Hash;
-                value.Contrasenia_Salt = hashSalt.Salt;
+                        value.Contrasenia = hashSalt.Hash;
+                        value.Contrasenia_Salt = hashSalt.Salt;
 
 
 
-                dbAlmacen.Empleados.Add(value);
-                dbAlmacen.SaveChanges();
+                        dbAlmacen.Empleados.Add(value);
+                        dbAlmacen.SaveChanges();
 
-                value.Contrasenia = null;
-                value.Contrasenia_Salt = null;
-                return Request.CreateResponse(HttpStatusCode.OK, new ReturnMessageJson(
-                    "success",
-                    "11",
-                    value,
-                    "User saved succesfully."
-                ));
+                        value.Contrasenia = null;
+                        value.Contrasenia_Salt = null;
+                        return Request.CreateResponse(HttpStatusCode.OK, new ReturnMessageJson(
+                            "success",
+                            "11",
+                            value,
+                            "User saved succesfully."
+                        ));
+                    }
+                    else
+                    {
+                        value.Usuario = null;
+                        value.Contrasenia = null;
+
+                        dbAlmacen.Empleados.Add(value);
+                        dbAlmacen.SaveChanges();
+                        return Request.CreateResponse(HttpStatusCode.OK, new ReturnMessageJson(
+                            "success",
+                            "11",
+                            value,
+                            "User saved succesfully."
+                        ));
+                    }
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound, new ReturnMessageJson(
+                         "fail",
+                         "-1",
+                         null,
+                         "Not authorized."
+                     ));
+                }
             }
             else
             {
-                value.Usuario = null;
-                value.Contrasenia = null;
-
-                dbAlmacen.Empleados.Add(value);
-                dbAlmacen.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK, new ReturnMessageJson(
-                    "success",
-                    "11",
-                    value,
-                    "User saved succesfully."
+                return Request.CreateResponse(HttpStatusCode.NotFound, new ReturnMessageJson(
+                    "fail",
+                    "-1",
+                    null,
+                    "Not authorized."
                 ));
             }
+
             
         }
 
         // PUT: api/Empleados/5
         public HttpResponseMessage Put(int id, [FromBody]Empleados value)
         {
-            Empleados empleadoToModify = dbAlmacen.Empleados.Find(id);
-
-            if (value.Contrasenia != null)
+            if (this.Request.Headers.Authorization != null)
             {
-                empleadoToModify.Nombre = value.Nombre;
-                empleadoToModify.DPI = value.DPI;
-                empleadoToModify.Cantidad_Hijos = value.Cantidad_Hijos;
-                empleadoToModify.Salario_Base = value.Salario_Base;
-                empleadoToModify.Fecha_Nacimiento = value.Fecha_Nacimiento;
-                empleadoToModify.Bono_Decreto = value.Bono_Decreto;
-                empleadoToModify.Email = value.Email;
-                empleadoToModify.Usuario = value.Usuario;
+                if (TokenManager.ValidateToken(this.Request.Headers.Authorization.Parameter))
+                {
+                    Empleados empleadoToModify = dbAlmacen.Empleados.Find(id);
 
-                HashSalt hashSalt = Hasher.GenerateSaltedHash(32, value.Contrasenia);
+                    if (value.Contrasenia != null)
+                    {
+                        empleadoToModify.Nombre = value.Nombre;
+                        empleadoToModify.DPI = value.DPI;
+                        empleadoToModify.Cantidad_Hijos = value.Cantidad_Hijos;
+                        empleadoToModify.Salario_Base = value.Salario_Base;
+                        empleadoToModify.Fecha_Nacimiento = value.Fecha_Nacimiento;
+                        empleadoToModify.Bono_Decreto = value.Bono_Decreto;
+                        empleadoToModify.Email = value.Email;
+                        empleadoToModify.Usuario = value.Usuario;
 
-                empleadoToModify.Contrasenia = hashSalt.Hash;
-                empleadoToModify.Contrasenia_Salt = hashSalt.Salt;
+                        HashSalt hashSalt = Hasher.GenerateSaltedHash(32, value.Contrasenia);
 
-                dbAlmacen.Entry(empleadoToModify).State = EntityState.Modified;
-                dbAlmacen.SaveChanges();
+                        empleadoToModify.Contrasenia = hashSalt.Hash;
+                        empleadoToModify.Contrasenia_Salt = hashSalt.Salt;
 
-                return Request.CreateResponse(HttpStatusCode.OK, new ReturnMessageJson(
-                     "success",
-                     "13",
-                     empleadoToModify,
-                     "User modified succesfully."
-                 ));
+                        dbAlmacen.Entry(empleadoToModify).State = EntityState.Modified;
+                        dbAlmacen.SaveChanges();
+
+                        return Request.CreateResponse(HttpStatusCode.OK, new ReturnMessageJson(
+                             "success",
+                             "13",
+                             empleadoToModify,
+                             "User modified succesfully."
+                         ));
+                    }
+                    else
+                    {
+                        empleadoToModify.Nombre = value.Nombre;
+                        empleadoToModify.DPI = value.DPI;
+                        empleadoToModify.Cantidad_Hijos = value.Cantidad_Hijos;
+                        empleadoToModify.Salario_Base = value.Salario_Base;
+                        empleadoToModify.Fecha_Nacimiento = value.Fecha_Nacimiento;
+                        empleadoToModify.Bono_Decreto = value.Bono_Decreto;
+                        empleadoToModify.Email = value.Email;
+                        empleadoToModify.Usuario = value.Usuario;
+
+                        dbAlmacen.Entry(empleadoToModify).State = EntityState.Modified;
+                        dbAlmacen.SaveChanges();
+
+                        return Request.CreateResponse(HttpStatusCode.OK, new ReturnMessageJson(
+                             "success",
+                             "13",
+                             empleadoToModify,
+                             "User modified succesfully."
+                         ));
+                    }
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound, new ReturnMessageJson(
+                         "fail",
+                         "-1",
+                         null,
+                         "Not authorized."
+                     ));
+                }
             }
             else
             {
-                empleadoToModify.Nombre = value.Nombre;
-                empleadoToModify.DPI = value.DPI;
-                empleadoToModify.Cantidad_Hijos = value.Cantidad_Hijos;
-                empleadoToModify.Salario_Base = value.Salario_Base;
-                empleadoToModify.Fecha_Nacimiento = value.Fecha_Nacimiento;
-                empleadoToModify.Bono_Decreto = value.Bono_Decreto;
-                empleadoToModify.Email = value.Email;
-                empleadoToModify.Usuario = value.Usuario;
-
-                dbAlmacen.Entry(empleadoToModify).State = EntityState.Modified;
-                dbAlmacen.SaveChanges();
-
-                return Request.CreateResponse(HttpStatusCode.OK, new ReturnMessageJson(
-                     "success",
-                     "13",
-                     empleadoToModify,
-                     "User modified succesfully."
-                 ));
+                return Request.CreateResponse(HttpStatusCode.NotFound, new ReturnMessageJson(
+                    "fail",
+                    "-1",
+                    null,
+                    "Not authorized."
+                ));
             }
 
         }
@@ -171,17 +220,41 @@ namespace TestAlmacenesJapon.Controllers
         // DELETE: api/Empleados/5
         public HttpResponseMessage Delete(int id)
         {
-            Empleados empleado = dbAlmacen.Empleados.Find(id);
+            if (this.Request.Headers.Authorization != null)
+            {
+                if (TokenManager.ValidateToken(this.Request.Headers.Authorization.Parameter))
+                {
+                    Empleados empleado = dbAlmacen.Empleados.Find(id);
 
-            dbAlmacen.Empleados.Remove(empleado);
-            dbAlmacen.SaveChanges();
+                    dbAlmacen.Empleados.Remove(empleado);
+                    dbAlmacen.SaveChanges();
 
-            return Request.CreateResponse(HttpStatusCode.OK, new ReturnMessageJson(
-                "success",
-                "12",
-                null,
-                "User deleted succesfully."
-            ));
+                    return Request.CreateResponse(HttpStatusCode.OK, new ReturnMessageJson(
+                        "success",
+                        "12",
+                        null,
+                        "User deleted succesfully."
+                    ));
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound, new ReturnMessageJson(
+                         "fail",
+                         "-1",
+                         null,
+                         "Not authorized."
+                     ));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, new ReturnMessageJson(
+                    "fail",
+                    "-1",
+                    null,
+                    "Not authorized."
+                ));
+            }
         }
     }
 }

@@ -12,36 +12,60 @@ import { DecoderJWT } from '../../utils/DecoderJWT';
 })
 export class RecoveryComponent implements OnInit {
 
-  isVerified=false;
-
   constructor(private router:Router,private http:HttpClient,
     private webService:ClienteCredentialsService,
     private snackbar:MatSnackBar,
     public dialog:MatDialog,
   public route:ActivatedRoute) { }
 
-  ngOnInit() {
+  JWT:String;
+  Contrasenia1:String;
+  Contrasenia2:String;
+  hide1=true;
+  hide2=true;
+  isLoading=false;
 
+  ngOnInit() {
+    this.JWT=this.route.snapshot.queryParamMap.get("identificator");
   }
 
-  verifyJWT(){
-    this.http.get(this.webService.URLRecoveryVerify+this.route.snapshot.queryParamMap.get("identificator"),{
-      headers: new HttpHeaders().set('Content-Type','application/json')
-    }).subscribe((response)=>{
-      this.isVerified=true;
-      console.log(response);
-    },(error)=>{
-      if(error["error"]!=null){
-        if(error["error"]["code"]!=null){
-          if(error["error"]["code"]==0){
-            this.snackbar.open("Token invalido.","",{
-              panelClass:['error_snackbar'],
-              duration:3000
+  restaurar(){
+
+    if(!RegExp("^[\\s]$").test(this.Contrasenia1.toString())&&!RegExp("^[\\s]$").test(this.Contrasenia2.toString())){
+      if(this.Contrasenia1==this.Contrasenia2){
+        var changeParams={
+          JWT1:this.JWT,
+          Contrasenia1:this.Contrasenia1
+        };
+    
+        this.http.post(this.webService.URLRecoveryChange,changeParams,{
+          headers: new HttpHeaders().set('Content-Type','application/json')
+        }).subscribe((response)=>{
+          console.log(response);
+          if(response["code"]==41){
+            this.snackbar.open("Contraseña restaurada.","",{
+              duration:3000,
+              panelClass:["exito_snackbar"]
             });
           }
-        }
+
+          this.isLoading=false;
+        },(error)=>{
+          if(error["error"]!=null){
+            if(error["error"]["code"]!=null){
+              if(error["error"]["code"]==0){
+                this.snackbar.open("Token invalido.","",{
+                  panelClass:['error_snackbar'],
+                  duration:3000
+                });
+              }
+            }
+          }
+
+          this.isLoading=false;
+        });
       }
-    });
+    }
   }
 
 }

@@ -13,7 +13,7 @@ namespace TestAlmacenesJapon.Controllers
 {
     public class AuthenticationController : ApiController
     {
-        private TestAlmacenesJaponEntities dbAlmacen = new TestAlmacenesJaponEntities();
+        private DB_A4BC7A_test1Entities dbAlmacen = new DB_A4BC7A_test1Entities();
 
         // GET: api/Authentication
         public IEnumerable<string> Get()

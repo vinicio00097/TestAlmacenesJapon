@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 using TestAlmacenesJapon.DBEntityFW;
 using TestAlmacenesJapon.Models;
@@ -13,7 +15,7 @@ namespace TestAlmacenesJapon.Controllers
 {
     public class PasswordRecoveryController : ApiController
     {
-        private TestAlmacenesJaponEntities dbAlmacen = new TestAlmacenesJaponEntities();
+        private DB_A4BC7A_test1Entities dbAlmacen = new DB_A4BC7A_test1Entities();
 
         // GET: api/PasswordRecovery
         public IEnumerable<string> Get()
@@ -21,29 +23,6 @@ namespace TestAlmacenesJapon.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/PasswordRecovery/5
-        public HttpResponseMessage Get(String jwt)
-        {
-            if (TokenManager.ValidateToken(jwt))
-            {
-                return Request.CreateResponse(HttpStatusCode.OK,new ReturnMessageJson(
-                        "success",
-                        "41",
-                        null,
-                        "Valid token."
-                    ));
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.NotFound, new ReturnMessageJson(
-                        "fail",
-                        "40",
-                        null,
-                        "Invalid token."
-                    ));
-
-            }
-        }
 
         // POST: api/PasswordRecovery
         [Route("api/PasswordRecovery/Request")]
@@ -67,14 +46,78 @@ namespace TestAlmacenesJapon.Controllers
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                return Request.CreateResponse(HttpStatusCode.NotFound,new ReturnMessageJson(
+                    "fail",
+                    "0",
+                    null,
+                    "Email or born date wrong."));
             }
         }
 
-        [Route("api/PasswordRecovery/Validate")]
-        public HttpResponseMessage Post([FromBody]string value2)
+        [Route("api/PasswordRecovery/Change")]
+        public HttpResponseMessage Post([FromBody]RequestChange paramsC)
         {
-            return Request.CreateResponse(HttpStatusCode.Unauthorized);
+            Tokens_Recuperacion verify = dbAlmacen.Tokens_Recuperacion.Find(paramsC.JWT1);
+
+
+            if (TokenManager.ValidateToken(paramsC.JWT1)&&verify!=null)
+            {
+                if (verify.Valido)
+                {
+                    String username = TokenManager.getUsername(paramsC.JWT1);
+                    Empleados empleado = dbAlmacen.Empleados.Where((item) => item.Usuario == username).FirstOrDefault();
+
+                    if (empleado != null)
+                    {
+                        HashSalt hashSalt = Hasher.GenerateSaltedHash(32, paramsC.Contrasenia1);
+
+                        empleado.Contrasenia = hashSalt.Hash;
+                        empleado.Contrasenia_Salt = hashSalt.Salt;
+
+                        dbAlmacen.Entry(empleado).State = EntityState.Modified;
+                        dbAlmacen.SaveChanges();
+
+                        Tokens_Recuperacion tokens_Recuperacion = dbAlmacen.Tokens_Recuperacion.Find(paramsC.JWT1);
+                        dbAlmacen.Tokens_Recuperacion.Remove(tokens_Recuperacion);
+                        dbAlmacen.SaveChanges();
+
+                        return Request.CreateResponse(HttpStatusCode.OK, new ReturnMessageJson(
+                            "success",
+                            "41",
+                            null,
+                            "Password changed."
+                        ));
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, new ReturnMessageJson(
+                            "fail",
+                            "45",
+                            null,
+                            "Has occurred un error."
+                        ));
+                    }
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new ReturnMessageJson(
+                        "fail",
+                        "40",
+                        null,
+                        "Invalid token."
+                    ));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, new ReturnMessageJson(
+                    "fail",
+                    "40",
+                    null,
+                    "Invalid token."
+                ));
+
+            }
         }
 
         // PUT: api/PasswordRecovery/5

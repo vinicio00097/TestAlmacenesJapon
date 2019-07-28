@@ -14,7 +14,7 @@ export class ClienteCredentialsService {
   public URLEmpleadosRead="http://localhost:51275/api/Empleados"
   public URLEmpleadosWrite="http://localhost:51275/api/Empleados"
   public URLRecovery="http://localhost:51275/api/PasswordRecovery/Request";
-  public URLRecoveryVerify="http://localhost:51275/api/PasswordRecovery/";
+  public URLRecoveryChange="http://localhost:51275/api/PasswordRecovery/Change";
 
   constructor() { }
 

@@ -5,8 +5,9 @@
     <button mat-raised-button (click)="calcular()">Analizar</button>
     
   <div align="center">
-    <h5 mat-dialog-title>Palindromos</h5>
-    <button *ngFor="let word of palindromes">{{word}} </button>
+    <h5 mat-dialog-title>Palíndromos</h5>
+    <mat-list>
+        <mat-list-item *ngFor="let word of palindromes"> {{word}} </mat-list-item>
+    </mat-list>
   </div>
-  
 </div>

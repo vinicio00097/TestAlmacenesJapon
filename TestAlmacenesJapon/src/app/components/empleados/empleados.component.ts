@@ -71,6 +71,11 @@ export class EmpleadosComponent implements OnInit {
             result["Id_Empleado"]=response["data"]["Id_Empleado"];
             this.empleadosData.push(result);
 
+            this.snackbar.open("Empleado \""+result.Nombre+"\" agregado.","",{
+              duration:3000,
+              panelClass:["exito_snackbar"]
+            });
+
             this.table.renderRows();
           }
         },(error)=>{
@@ -98,10 +103,14 @@ export class EmpleadosComponent implements OnInit {
             headers: new HttpHeaders().set('Content-Type','application/json')
             .set('Authorization','AUTH_TOKEN '+this.webService.getAuthToken())
           }).subscribe((response)=>{
-            console.log(response);
             if(response["code"]==12){
               var index=this.empleadosData.indexOf(empleado);
               this.empleadosData.splice(index,1);
+
+              this.snackbar.open("Empleado \""+empleado.Nombre+"\" eliminado.","",{
+                duration:3000,
+                panelClass:["exito_snackbar"]
+              });
       
               this.table.renderRows();
             }
@@ -154,8 +163,9 @@ export class EmpleadosComponent implements OnInit {
             empleado.Fecha_Nacimiento=result.Fecha_Nacimiento;
             empleado.Sueldo_Base=result.Sueldo_Base;
             empleado.Bono_Decreto=result.Bono_Decreto;
+            empleado.Email=result.Email;
             empleado.Usuario=result.Usuario;
-            this.snackbar.open("Empleado \""+result.Nombre+"\" editado.","",{
+            this.snackbar.open("Empleado \""+empleado.Nombre+"\" editado.","",{
               duration:3000,
               panelClass:["exito_snackbar"]
             });

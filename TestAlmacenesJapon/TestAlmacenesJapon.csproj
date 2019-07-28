@@ -231,12 +231,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\EmailSender.cs" />
+    <Compile Include="Models\RequestChange.cs" />
+    <Compile Include="Services\EmailSender.cs" />
     <Compile Include="Models\EmpleadoCredentials.cs" />
-    <Compile Include="Models\Hasher.cs" />
+    <Compile Include="Services\Hasher.cs" />
     <Compile Include="Models\HashSalt.cs" />
     <Compile Include="Models\RecoveryParams.cs" />
-    <Compile Include="Models\TokenManager.cs" />
+    <Compile Include="Services\TokenManager.cs" />
     <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ReturnMessageJson.cs" />
@@ -247,8 +248,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="DBEntityFW\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
       <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
     <Content Include="DBEntityFW\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -289,6 +290,7 @@
     <Content Include="DBEntityFW\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

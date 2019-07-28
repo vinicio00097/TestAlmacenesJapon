@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TestAlmacenesJaponModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DB_A4BC7A_test1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Empleados">
           <Key>
             <PropertyRef Name="Id_Empleado" />
@@ -26,34 +26,31 @@
           <Key>
             <PropertyRef Name="Token" />
           </Key>
-          <Property Name="Token" Type="nchar" MaxLength="256" Nullable="false" />
+          <Property Name="Token" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Valido" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="TestAlmacenesJaponModelStoreContainer">
+        <EntityContainer Name="DB_A4BC7A_test1ModelStoreContainer">
           <EntitySet Name="Empleados" EntityType="Self.Empleados" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tokens_Recuperacion" EntityType="Self.Tokens_Recuperacion" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="TestAlmacenesJaponModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="TestAlmacenesJaponEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Empleados" EntityType="TestAlmacenesJaponModel.Empleados" />
-          <EntitySet Name="Tokens_Recuperacion" EntityType="TestAlmacenesJaponModel.Tokens_Recuperacion" />
-        </EntityContainer>
+      <Schema Namespace="DB_A4BC7A_test1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Empleados">
           <Key>
             <PropertyRef Name="Id_Empleado" />
           </Key>
           <Property Name="Id_Empleado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="DPI" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DPI" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Cantidad_Hijos" Type="Int16" Nullable="false" />
           <Property Name="Salario_Base" Type="Double" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Bono_Decreto" Type="Double" Nullable="false" />
           <Property Name="Fecha_Nacimiento" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Contrasenia" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Contrasenia_Salt" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
@@ -62,42 +59,46 @@
           <Key>
             <PropertyRef Name="Token" />
           </Key>
-          <Property Name="Token" Type="String" Nullable="false" MaxLength="256" FixedLength="true" Unicode="true" />
+          <Property Name="Token" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Valido" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityContainer Name="DB_A4BC7A_test1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Empleados" EntityType="Self.Empleados" />
+          <EntitySet Name="Tokens_Recuperacion" EntityType="Self.Tokens_Recuperacion" />
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TestAlmacenesJaponModelStoreContainer" CdmEntityContainer="TestAlmacenesJaponEntities">
+        <EntityContainerMapping StorageEntityContainer="DB_A4BC7A_test1ModelStoreContainer" CdmEntityContainer="DB_A4BC7A_test1Entities">
           <EntitySetMapping Name="Empleados">
-            <EntityTypeMapping TypeName="TestAlmacenesJaponModel.Empleados">
+            <EntityTypeMapping TypeName="DB_A4BC7A_test1Model.Empleados">
               <MappingFragment StoreEntitySet="Empleados">
-                <ScalarProperty Name="Contrasenia_Salt" ColumnName="Contrasenia_Salt" />
-                <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
-                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Fecha_Nacimiento" ColumnName="Fecha_Nacimiento" />
-                <ScalarProperty Name="Bono_Decreto" ColumnName="Bono_Decreto" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Salario_Base" ColumnName="Salario_Base" />
-                <ScalarProperty Name="Cantidad_Hijos" ColumnName="Cantidad_Hijos" />
-                <ScalarProperty Name="DPI" ColumnName="DPI" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Id_Empleado" ColumnName="Id_Empleado" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="DPI" ColumnName="DPI" />
+                <ScalarProperty Name="Cantidad_Hijos" ColumnName="Cantidad_Hijos" />
+                <ScalarProperty Name="Salario_Base" ColumnName="Salario_Base" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Bono_Decreto" ColumnName="Bono_Decreto" />
+                <ScalarProperty Name="Fecha_Nacimiento" ColumnName="Fecha_Nacimiento" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
+                <ScalarProperty Name="Contrasenia_Salt" ColumnName="Contrasenia_Salt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tokens_Recuperacion">
-            <EntityTypeMapping TypeName="TestAlmacenesJaponModel.Tokens_Recuperacion">
+            <EntityTypeMapping TypeName="DB_A4BC7A_test1Model.Tokens_Recuperacion">
               <MappingFragment StoreEntitySet="Tokens_Recuperacion">
-                <ScalarProperty Name="Valido" ColumnName="Valido" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Valido" ColumnName="Valido" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
