@@ -7,6 +7,7 @@ La aplicación esta elaborada con:
 La aplicación Angular esta embedida en el proyecto de .net, debido al tamaño la capeta node_modules no se colocó en la raíz.
 
 Credenciales para poder entrar en la aplicación:
+
 Usuario: hola
 Password: 1234
 
