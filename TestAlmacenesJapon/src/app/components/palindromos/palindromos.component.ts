@@ -36,14 +36,31 @@ export class PalindromosComponent implements OnInit {
       let words=this.Palindromo.split(new RegExp("[\\s]+"));
 
       for(let count=0;count<words.length;count++){
-        let array=[];
-        let newArray=[];
-  
+
         for(let count2=0;count2<words[count].length;count2++){
-          array.push(words[count][count2]);
+
+          let originalArray=[];
+          let reversedArray=[];
+          let count3=count2;
+          while(count3<words[count].length){
+            reversedArray.reverse();
+            originalArray.push(words[count][count3]);
+            reversedArray.push(words[count][count3]);
+
+            let originalString=originalArray.join("");
+            let reversedString=reversedArray.reverse().join("");
+            if(originalArray.length>1){
+              if(originalString==reversedString&&reversedString!=words[count]){
+                this.palindromes.push(originalArray.join(""));
+                break;
+              }
+            }
+            count3++;
+          }
         }
 
-        if(array.reverse().join("")==words[count]){
+
+        if(words[count].split("").reverse().join("")==words[count]){
           this.palindromes.push(words[count]);
         }
       }
